@@ -1,0 +1,75 @@
+body {
+  background-color: rgb(92, 219, 148);
+}
+#form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  font-size: 55px;
+  display: flex;
+  justify-content: center;
+}
+#book-form {
+  border: solid 3px rgb(5, 57, 107);
+  border-radius: 5px;
+
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  width: 300px;
+  background-color: rgb(5, 57, 107);
+  margin-top: 150px;
+
+  flex-direction: column;
+  align-items: flex-start;
+}
+#submit-book {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.card {
+  border-width: 5px;
+  border-style: solid;
+  padding-left: 350px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  font-size: 25px;
+  color: rgb(45, 90, 90);
+}
+
+#addbook-container {
+  padding-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#showform-btn:hover {
+  background-color: rgb(5, 57, 107);
+  color: white;
+}
+#showform-btn {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+  border-radius: 6px;
+  border: solid 5px black;
+}
+#book-cards {
+  padding-top: 100px;
+}
+#show-books {
+  display: none;
+}

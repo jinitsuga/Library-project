@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="library.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Library</title>
+  </head>
+  <body>
+    <div id="container">
+      <h1>My Library</h1>
+      <div id="addbook-container">
+        <button class="main-buttons" id="showform-btn" type="button">
+          + Book
+        </button>
+      </div>
+      <button class="main-buttons" id="show-books" type="button">
+        My books
+      </button>
+      <div id="form-container">
+        <div id="book-form">
+          <label for="author">
+            <input type="text" id="author" placeholder="Author" />
+          </label>
+          <label for="title">
+            <input type="text" id="title" placeholder="Title" />
+          </label>
+          <label for="pages">
+            <input type="number" id="pages" placeholder="# of pages" />
+          </label>
+          <label for="read">
+            Have you read it?
+            <select id="read" name="read">
+              <option value="Not read">Not read</option>
+              <option value="Read">Read</option>
+            </select>
+          </label>
+          <div id="addBookBtn">
+            <button id="submit-book" type="button">Add book</button>
+          </div>
+        </div>
+      </div>
+      <section id="book-cards"></section>
+
+      <script>
+        const showBooksBtn = document.querySelector("#show-books");
+        const showFormBtn = document.querySelector("#showform-btn");
+        const bookForm = document.querySelector("#book-form");
+        const author = document.querySelector("#author");
+        const title = document.querySelector("#title");
+        const bookPages = document.querySelector("#pages");
+        const readStatus = document.querySelector("#read");
+        const addBook = document.querySelector("#addBookBtn");
+
+        let myLibrary = [];
+
+        function Book(author, title, pages, read) {}
+        Book.prototype.changeReadStatus = function () {
+          if (this.read == "Not read") {
+            return (this.read = "Read");
+          } else if (this.read == "Read") {
+            return (this.read = "Not read");
+          }
+        };
+        function MyBook(author, title, pages, read) {
+          this.author = author;
+          this.title = title;
+          this.pages = pages;
+          this.read = read;
+        }
+        MyBook.prototype = Object.create(Book.prototype);
+
+        const cardsDisplay = document.querySelector("#book-cards");
+
+        function removeCards() {
+          while (cardsDisplay.firstChild)
+            cardsDisplay.removeChild(cardsDisplay.firstChild);
+        }
+        function showCards() {
+          removeCards();
+          let i = 0;
+          while (i < myLibrary.length) {
+            let card = document.createElement("div");
+            card.dataset.num = i;
+            let deleteBtn = document.createElement("button");
+            card.appendChild(deleteBtn);
+            deleteBtn.textContent = "Remove";
+            deleteBtn.addEventListener("click", function () {
+              cardsDisplay.removeChild(card);
+              myLibrary.splice(card.dataset.num, 1);
+              console.log(myLibrary);
+            });
+            let cardTitle = document.createElement("span");
+            cardTitle.textContent = myLibrary[i].title;
+            let cardAuthor = document.createElement("span");
+            cardAuthor.textContent = myLibrary[i].author;
+            let cardPages = document.createElement("span");
+            cardPages.textContent = myLibrary[i].pages;
+            let cardReadStatus = document.createElement("span");
+            cardReadStatus.textContent = myLibrary[i].read;
+            card.appendChild(cardTitle);
+            card.appendChild(cardAuthor);
+            card.appendChild(cardPages);
+            card.appendChild(cardReadStatus);
+            cardsDisplay.appendChild(card);
+            card.classList.add("card");
+            i++;
+          }
+        }
+        function showAddedBook() {
+          let card = document.createElement("div");
+          card.dataset.num = myLibrary.length - 1;
+          let deleteBtn = document.createElement("button");
+          card.appendChild(deleteBtn);
+          deleteBtn.textContent = "Remove";
+          deleteBtn.addEventListener("click", function () {
+            cardsDisplay.removeChild(card);
+            myLibrary.splice(card.dataset.num, 1);
+          });
+          let changeReadBtn = document.createElement("button");
+          changeReadBtn.textContent = "Change read status";
+          changeReadBtn.addEventListener("click", function () {
+            myLibrary[card.dataset.num].changeReadStatus();
+            cardReadStatus.textContent = myLibrary[card.dataset.num].read;
+          });
+          card.appendChild(changeReadBtn);
+          let cardTitle = document.createElement("span");
+          cardTitle.textContent = myLibrary[myLibrary.length - 1].title;
+          let cardAuthor = document.createElement("span");
+          cardAuthor.textContent = myLibrary[myLibrary.length - 1].author;
+          let cardPages = document.createElement("span");
+          cardPages.textContent = myLibrary[myLibrary.length - 1].pages;
+          let cardReadStatus = document.createElement("span");
+          cardReadStatus.textContent = myLibrary[myLibrary.length - 1].read;
+          card.appendChild(cardTitle);
+          card.appendChild(cardAuthor);
+          card.appendChild(cardPages);
+          card.appendChild(cardReadStatus);
+          cardsDisplay.appendChild(card);
+          card.classList.add("card");
+        }
+        function addBookToLibrary() {
+          let testBook = new MyBook(
+            author.value,
+            title.value,
+            bookPages.value,
+            readStatus.value
+          );
+          myLibrary.push(testBook);
+          showAddedBook();
+        }
+        addBook.addEventListener("click", function () {
+          document.getElementById("book-form").style.display = "none";
+          addBookToLibrary();
+        });
+        showBooksBtn.addEventListener("click", function () {
+          showCards();
+        });
+        showFormBtn.addEventListener("click", function () {
+          document.getElementById("book-form").style.display = "flex";
+        });
+      </script>
+    </div>
+  </body>
+</html>
